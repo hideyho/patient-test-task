@@ -1,0 +1,398 @@
+{
+	"info": {
+		"_postman_id": "9abe2efd-d8bd-422e-bb13-b27624437928",
+		"name": "Patient-test-task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14088854"
+	},
+	"item": [
+		{
+			"name": "CreatePatient",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"StatusCode is 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var id = pm.response.json();\r",
+							"console.log(\"PatientId:\" + id);\r",
+							"pm.environment.set(\"patientId\", id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": {\r\n      \"use\": \"official\",\r\n      \"family\": \"Иванов\",\r\n      \"given\": [\r\n        \"Иван\",\r\n        \"Иванович\"\r\n      ]\r\n    },\r\n    \"gender\": \"Male\",\r\n    \"birthDate\": \"1998-03-08T14:42:00.375Z\",\r\n    \"active\": true\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/{{api}}/create",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{api}}",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPatientById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"StatusCode is 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var result = pm.response.json();\r",
+							"console.log(\"Result:\" + JSON.stringify(result));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/{{api}}/getById?id={{patientId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{api}}",
+						"getById"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{patientId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdatePatient",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"StatusCode is 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var result = pm.response.json();\r",
+							"console.log(\"Result:\" + JSON.stringify(result));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": {\r\n      \"id\": \"{{patientId}}\",\r\n      \"use\": \"not official\",\r\n      \"family\": \"Сергеев\",\r\n      \"given\": [\r\n        \"Юлия\",\r\n        \"Иванович\"\r\n      ]\r\n    },\r\n    \"gender\": \"Female\",\r\n    \"birthDate\": \"1996-03-08T14:42:00.375Z\",\r\n    \"active\": true\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/{{api}}/update",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{api}}",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPatientByIdAfterUpdate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"StatusCode is 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var result = pm.response.json();\r",
+							"console.log(\"Result:\" + JSON.stringify(result));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/{{api}}/getById?id={{patientId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{api}}",
+						"getById"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{patientId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateMany",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"StatusCode is 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"name\": {\r\n      \"use\": \"official\",\r\n      \"family\": \"Иванов\",\r\n      \"given\": [\r\n        \"Иван\",\r\n        \"Иванович\"\r\n      ]\r\n    },\r\n    \"gender\": \"Male\",\r\n    \"birthDate\": \"1998-03-08T14:42:00.375Z\",\r\n    \"active\": true\r\n  },\r\n{\r\n    \"name\": {\r\n      \"use\": \"not official\",\r\n      \"family\": \"Сидоров\",\r\n      \"given\": [\r\n        \"Иван\",\r\n        \"Алексеевич\"\r\n      ]\r\n    },\r\n    \"birthDate\": \"2001-02-04T14:42:00.375Z\",\r\n    \"active\": true\r\n  },\r\n{\r\n    \"name\": {\r\n      \"use\": \"official\",\r\n      \"family\": \"Сергеев\",\r\n      \"given\": [\r\n        \"Иванов\",\r\n        \"Юлия\"\r\n      ]\r\n    },\r\n    \"gender\": \"Other\",\r\n    \"birthDate\": \"2018-03-08T14:42:00.375Z\",\r\n    \"active\": true\r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/{{api}}/createRange",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{api}}",
+						"createRange"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search equal",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"StatusCode is 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/{{api}}/search?searchString=eq1998-03-08",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{api}}",
+						"search"
+					],
+					"query": [
+						{
+							"key": "searchString",
+							"value": "eq1998-03-08"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeletePatient",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"StatusCode is 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var result = pm.response.json();\r",
+							"console.log(\"Result:\" + JSON.stringify(result));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/{{api}}/delete?id={{patientId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{api}}",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{patientId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search gt & lt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"StatusCode is 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/{{api}}/search?searchString=gt1998-10-01%26lt2020-01-01T12:41:32",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"{{api}}",
+						"search"
+					],
+					"query": [
+						{
+							"key": "searchString",
+							"value": "gt1998-10-01&lt2020-01-01T12:41:32"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search sa & eb",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Search ge & le",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:3500",
+			"type": "string"
+		},
+		{
+			"key": "api",
+			"value": "api/patient",
+			"type": "string"
+		},
+		{
+			"key": "patientId",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
